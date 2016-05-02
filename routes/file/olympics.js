@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const Rx = require('rxjs');
+const _ = require('lodash')
 
 
 exports.findDisciplines = {
@@ -14,7 +15,7 @@ exports.findDisciplines = {
 
     let readFileAsObservable = Rx.Observable.bindNodeCallback(fs.readFile);
     let data = readFileAsObservable('./data/discipline.json', 'utf8');
-    data.subscribe(data => { disStream.next(data); });
+    data.subscribe(data => { console.log('data.length : ' + _.size(JSON.parse(data))); disStream.next(data); });
     
     disStream.subscribe(disciplines => { return reply(disciplines); });
     

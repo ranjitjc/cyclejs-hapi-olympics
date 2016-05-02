@@ -3,18 +3,31 @@
 // import OlympicsApi from './routes/olympics';
 
 const Hapi          = require('hapi');
-const OlympicsApi   = require('./routes/olympics');
+const OlympicsFileApi   = require('./routes/file/olympics');
  
+let goodOptions = {
+    reporters : [{
+        reporter : require('good-console'),
+        events    : {log:'*', response : '*' }
+    }]
+}
+
 
 const routes  = [
-  { method: 'GET', path: '/api/discipline', config: OlympicsApi.findDisciplines },
+    { method: 'GET', path: '/api/discipline', config: OlympicsFileApi.findDisciplines },
 ];
 
+
 const server  = new Hapi.Server();
-
 server.connection({ port: 25500 });
-server.route(routes);
 
-server.start(() => {
-  console.log('RxJS API server running at', server.info.uri);
-});
+server.register({
+    register : require('good'),
+    options : goodOptions
+}, err => {
+    server.route(routes);
+    server.start(() => {
+        console.log('RxJS API server running at', server.info.uri);
+    });        
+})
+
