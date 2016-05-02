@@ -14,7 +14,8 @@ let goodOptions = {
 
 
 const routes  = [
-    { method: 'GET', path: '/api/discipline', config: OlympicsFileApi.findDisciplines },
+    { method: 'GET', path: '/api/discipline', config: OlympicsFileApi.getDisciplines },
+    { method: 'GET', path: '/api/event', config: OlympicsFileApi.getEvents },
 ];
 
 
